@@ -29,10 +29,13 @@ function App() {
       const exactResponse = await axios.get(`http://localhost:5000/search/exact`, {
         params: { name: fullName }
       });
-      setExactMatches(exactResponse.data.exactMatches.slice(0,5) || []);
+      const exactMatchesData = exactResponse.data.exactMatches.slice(0, 5) || [];
+      setExactMatches(exactMatchesData);
+
+      const exactMatchNames = exactMatchesData.map(match => match.name);
 
       const possibleResponse = await axios.get(`http://localhost:5000/search/possible`, {
-        params: { firstName: firstName.trim(), lastName: lastName.trim() }
+        params: { firstName: firstName.trim(), lastName: lastName.trim(), exactMatches: exactMatchNames }
       });
       setPossibleMatches(possibleResponse.data.possibleMatches.slice(0,5) || []);
 

@@ -45,18 +45,21 @@ button:hover {
   max-width: 1200px;
   margin-top: 20px;
   flex-wrap: wrap;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .exact-matches, .possible-matches, .company-matches {
   flex: 1;
   min-width: 250px;
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin: 10px;
   max-height: 300px;
   overflow-y: auto;
+  font-size: 14px;
 }
 
 
