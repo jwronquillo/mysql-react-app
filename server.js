@@ -38,6 +38,7 @@ app.get('/search/possible', (req, res) => {
 
     const queryParams = [];
     let conditions = [];
+    let conditionsExact = [];
 
     if (firstName && firstName.trim()) {
         conditions.push(`name LIKE ?`);
@@ -47,39 +48,26 @@ app.get('/search/possible', (req, res) => {
         conditions.push(`name LIKE ?`);
         queryParams.push(`%${lastName.trim()}%`);
     }
+        if (exactMatches && exactMatches.length > 0) {
+        const exactMatchConditions = exactMatches.map(() => `AND name != ?`).join(' AND ');
+        conditionsExact.push(`${exactMatchConditions}`);
+        queryParams.push(...exactMatches);
+    }
 
     if (conditions.length === 0) {
         return res.status(400).json({ error: "Please provide at least one search term." });
     }
 
-    if (exactMatches && exactMatches.length > 0) {
-        const exactMatchConditions = exactMatches.map((_, index) => `name != ?`).join(' AND ');
-        conditions.push(`(${exactMatchConditions})`);
-        queryParams.push(...exactMatches);
-    }
+    const query = `SELECT * FROM individual WHERE (${conditions.join(' OR ')}) ${conditionsExact}`;
 
-    const query = `SELECT * FROM individual WHERE ${conditions.join(' OR ')}`;
-    
+
     console.log("Exact Matches to Exclude:", exactMatches);
     console.log("SQL Query:", query);
     console.log("Query Params:", queryParams);
-
+    
     db.query(query, queryParams, (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ possibleMatches: results });
-    });
-});
-
-app.get('/search/company', (req, res) => {
-    const { name } = req.query;
-
-    if  (!name || !name.trim()) {
-        return res.status(400).json({ error: "Please provide a name for company search."});
-    }
-    const query = `SELECT * FROM company WHERE name LIKE ?`;
-    db.query(query,  [`%${name.trim()}%`], (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ companyMatches: results });
     });
 });
 
