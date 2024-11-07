@@ -12,25 +12,25 @@ const CompactDisplay = ({ results }) => {
             {results.map((item) => (
                 <div key={item.id} style={styles.card}>
                     <h3>{item.name}</h3>
-                    <p><strong>Aliases:</strong> {item.aliases}</p>
-                    <p><strong>Birthdate:</strong> {item.birth_date}</p>
-                    <p><strong>Addresses:</strong> {item.addresses}</p>
-                    <p><strong>Country:</strong> {item.countries}</p>
-                    <p><strong>Schema:</strong> {item.schema}</p>
+                    <p><strong>Phones:</strong> {item.phones || 'N/A'}</p>
+                    <p><strong>Emails:</strong> {item.emails || 'N/A'}</p>
                     <button onClick={() => handleToggleDetails(item.id)}>
-                        {expandedItem === item.id ? 'Hide Details' : 'See More Details'}
+                        {expandedItem === item.id ? 'Hide Details' : 'More Information'}
                     </button>
                     {expandedItem === item.id && (
                         <div style={styles.details}>
                             <p><strong>ID:</strong> {item.id}</p>
-                            <p><strong>Identifiers:</strong> {item.identifiers}</p>
-                            <p><strong>Sanctions:</strong> {item.sanctions}</p>
-                            <p><strong>Phones:</strong> {item.phones}</p>
-                            <p><strong>Emails:</strong> {item.emails}</p>
-                            <p><strong>Dataset:</strong> {item.dataset}</p> 
-                            <p><strong>First Seen:</strong> {item.first_seen}</p>
-                            <p><strong>Last Seen:</strong> {item.last_seen}</p>
-                            <p><strong>Last Change:</strong> {item.last_change}</p>
+                            <p><strong>Aliases:</strong> {item.aliases || 'N/A'}</p>
+                            <p><strong>Birthdate:</strong> {item.birth_date || 'N/A'}</p>
+                            <p><strong>Country:</strong> {item.countries || 'N/A'}</p>
+                            <p><strong>Addresses:</strong> {item.addresses || 'N/A'}</p>
+                            <p><strong>Schema:</strong> {item.schema || 'N/A'}</p>
+                            <p><strong>Identifiers:</strong> {item.identifiers || 'N/A'}</p>
+                            <p><strong>Sanctions:</strong> {item.sanctions || 'N/A'}</p>
+                            <p><strong>Dataset:</strong> {item.dataset || 'N/A'}</p> 
+                            <p><strong>First Seen:</strong> {item.first_seen || 'N/A'}</p>
+                            <p><strong>Last Seen:</strong> {item.last_seen || 'N/A'}</p>
+                            <p><strong>Last Change:</strong> {item.last_change || 'N/A'}</p>
                         </div>
                     )}
                 </div>
